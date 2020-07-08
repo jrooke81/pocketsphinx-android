@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:4.0.0'
     }
 }
 
@@ -23,10 +23,10 @@ allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 28
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 29
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 5
         versionName "5prealpha"
         setProperty("archivesBaseName", "pocketsphinx-android-$versionName")
@@ -58,13 +58,13 @@ task swig {
         assert file("$pocketsphinx_dir/include").exists()
     }
     doLast {
-        mkdir 'build/generated-src/java'
+        mkdir 'build/generated-src/csharp'
         mkdir 'build/generated-src/cpp'
         exec {
             commandLine 'swig',
                 "-I$sphinxbase_dir/include", "-I$sphinxbase_dir/swig",
                 "-java", "-package", "edu.cmu.pocketsphinx",
-                "-outdir", "build/generated-src/java", "-o", "build/generated-src/cpp/sphinxbase_wrap.c",
+                "-outdir", "build/generated-src/csharp", "-o", "build/generated-src/cpp/sphinxbase_wrap.c",
                 "$sphinxbase_dir/swig/sphinxbase.i"
         }
         exec {
@@ -73,7 +73,7 @@ task swig {
                 "-I$pocketsphinx_dir/include",
                 "-I$pocketsphinx_dir/swig",
                 "-java", "-package", "edu.cmu.pocketsphinx",
-                "-outdir", "build/generated-src/java", "-o", "build/generated-src/cpp/pocketsphinx_wrap.c",
+                "-outdir", "build/generated-src/csharp", "-o", "build/generated-src/cpp/pocketsphinx_wrap.c",
                 "$pocketsphinx_dir/swig/pocketsphinx.i"
         }
     }
